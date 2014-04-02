@@ -28,10 +28,12 @@ Then in the next step click on "Use the new project wizard'
 Choose 'android project from existing code'
 In the next screen click on 'browse' in the place where 'root directory' selection option is mentioned , select the place where you imported your project.
 Press Finish
-The project should be imported as an android project now
+The project should be imported as an android project
 
 
-You apparently made your whole workspace into a git repo
+
+
+do not make your whole workspace into a git repo
 
 Delete/backup your repo (the workspace/.git folder)
 Go to github and create a new repo - say you name it my-project
