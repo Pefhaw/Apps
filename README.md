@@ -11,4 +11,4 @@ Steps:
 
 Eclipse: File-> Import> Git-> Project from Git-> Clone URI->
 
-Clone URL: https://github.com/github/android.git
+Clone URL: https://github.com/Pefhaw/Apps.git
