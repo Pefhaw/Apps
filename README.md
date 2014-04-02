@@ -29,3 +29,20 @@ Choose 'android project from existing code'
 In the next screen click on 'browse' in the place where 'root directory' selection option is mentioned , select the place where you imported your project.
 Press Finish
 The project should be imported as an android project now
+
+
+You apparently made your whole workspace into a git repo
+
+Delete/backup your repo (the workspace/.git folder)
+Go to github and create a new repo - say you name it my-project
+Install msysgit. You will have to work with it sooner or later
+Right click on your project folder and choose Git Bash here
+Issue
+
+$ git init
+$ echo bin/ >> .gitignore # exclude the bin folder !
+$ git add -A && git commit -m "All my files" # this will commit *all*
+# better fire up the gui and choose what to commit
+$ git remote add origin https://github.com/YOURUSERNAME/my-project.git
+$ git push -u origin master
+Done
