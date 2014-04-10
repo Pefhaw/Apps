@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">PlanningTable</string>
+    <string name="app_edit">Edit Here</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="button_add">Add New</string>
 
 </resources>
