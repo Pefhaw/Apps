@@ -9,7 +9,7 @@
     tools:context=".MainActivity" >
 
     <EditText
-        android:id="@+id/textPersonName"
+        android:id="@+id/editTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -47,13 +47,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonAddNew"
-        android:layout_alignLeft="@+id/textPersonName"
-        android:layout_below="@+id/textPersonName" >
+        android:layout_alignLeft="@+id/editTextPersonName"
+        android:layout_below="@+id/editTextPersonName" >
 
         <TextView
-            android:id="@+id/textDetails"
-            android:layout_width="276dp"
-            android:layout_height="278dp" />
+            android:id="@+id/editTextDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     </ScrollView>
 

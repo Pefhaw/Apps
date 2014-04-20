@@ -9,16 +9,16 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textMessages"
+        android:id="@+id/textViewMessages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_edit" />
 
     <EditText
-        android:id="@+id/textPersonName"
+        android:id="@+id/editTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textMessages"
+        android:layout_below="@+id/textViewMessages"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:ems="10"
@@ -29,21 +29,21 @@
     </EditText>
 
     <EditText
-        android:id="@+id/textPersonID"
+        android:id="@+id/editTextPersonID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textPersonName"
+        android:layout_below="@+id/editTextPersonName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/PersonID"
-        android:inputType="textPersonName" />
+        android:inputType="text|textPersonName" />
 
     <EditText
-        android:id="@+id/textPhone"
+        android:id="@+id/editTextPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textPersonID"
+        android:layout_below="@+id/editTextPersonID"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:ems="10"
@@ -51,22 +51,22 @@
         android:inputType="phone" />
 
     <EditText
-        android:id="@+id/textEmailAddress"
+        android:id="@+id/editTextEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textPhone"
+        android:layout_below="@+id/editTextPhone"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="@string/EmailAddress"
+        android:hint="@string/Email"
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/textDetails"
+        android:id="@+id/editTextDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textEmailAddress"
-        android:layout_below="@+id/textEmailAddress"
+        android:layout_alignLeft="@+id/editTextEmail"
+        android:layout_below="@+id/editTextEmail"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="@string/Details"
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/buttonSave"
         android:layout_alignBottom="@+id/buttonSave"
-        android:layout_alignRight="@+id/textDetails"
+        android:layout_alignRight="@+id/editTextDetails"
         android:layout_marginRight="28dp"
         android:onClick="buttonBackClick"
         android:text="@string/buttonBack" />
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textMessages"
+        android:layout_toRightOf="@+id/textViewMessages"
         android:onClick="buttonSaveClick"
         android:text="@string/buttonSave" />
 

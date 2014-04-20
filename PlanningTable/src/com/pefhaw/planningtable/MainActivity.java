@@ -11,15 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	EditText textPersonName;
-	TextView textDetails;
+	EditText editTextPersonName;
+	TextView textViewDetails;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		textPersonName = (EditText)findViewById(R.id.textPersonName);
-		textDetails = (TextView)findViewById(R.id.textDetails);
+		editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
+		textViewDetails = (TextView)findViewById(R.id.editTextDetails);
 	}
 
 	@Override
@@ -37,14 +37,14 @@ public class MainActivity extends Activity {
 	public void buttonSearchClick(View view)  {
 		// Get the stored preferences
 		int mode = Activity.MODE_PRIVATE;
-		SharedPreferences SharedPreferences = getSharedPreferences(textPersonName.getText().toString(),mode);
+		SharedPreferences SharedPreferences = getSharedPreferences(editTextPersonName.getText().toString(),mode);
 		// Retrieve the saved values.
-		String textPersonID = SharedPreferences.getString("textPersonID", "");
-		String textPhone = SharedPreferences.getString("textPhone", "");
-		String textEmailAddress = SharedPreferences.getString("textEmailAddress", "");
-		String stringtextDetails = SharedPreferences.getString("textDetails", "");
-		textDetails.setText(textPersonName.getText().toString() + textPersonID + textPhone + textEmailAddress + stringtextDetails);
-		}
+		String stringPersonID = SharedPreferences.getString("PersonID", "");
+		String stringPhone = SharedPreferences.getString("Phone", "");
+		String stringEmail = SharedPreferences.getString("Email", "");
+		String stringDetails = SharedPreferences.getString("Details", "");
+		textViewDetails.setText("Person Name : " + editTextPersonName.getText().toString() + "\nPerson ID : " + stringPersonID + "\nPhone : " + stringPhone + "\nEmail : " + stringEmail + "\nDetails : " + stringDetails);
+	}
 		
   
 	public boolean onKeyUp(int keyCode, KeyEvent event) {

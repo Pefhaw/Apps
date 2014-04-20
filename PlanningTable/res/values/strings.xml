@@ -9,7 +9,7 @@
     <string name="PersonName">Person Name</string>
     <string name="PersonID">Person ID</string>
     <string name="Phone">Phone</string>
-    <string name="EmailAddress">Email Address</string>
+    <string name="Email">Email</string>
     <string name="Details">Details</string>
     <string name="buttonSearch">Search</string>
     <string name="buttonBack">Back</string>
