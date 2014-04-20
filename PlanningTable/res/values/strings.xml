@@ -11,5 +11,6 @@
     <string name="Phone">Phone</string>
     <string name="EmailAddress">Email Address</string>
     <string name="Details">Details</string>
+    <string name="buttonSearch">Search</string>
 
 </resources>

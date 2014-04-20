@@ -18,10 +18,28 @@
         android:id="@+id/buttonAddNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="154dp"
+        android:layout_marginBottom="30dp"
         android:onClick="buttonAddNewClick"
         android:text="@string/buttonAddNew" />
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonAddNew"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="37dp"
+        android:onClick="buttonSearchClick"
+        android:text="@string/buttonSearch" />
+
+    <ListView
+        android:id="@+id/listViewDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1" >
+
+    </ListView>
 
 </RelativeLayout>
