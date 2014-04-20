@@ -23,15 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pefhaw.planningtable.EditActivity"
-            android:label="@string/appName" >
-            <intent-filter>
-                <action android:name="com.pefhaw.planningtable.EditActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.pefhaw.planningtable.ActivityPersonAdd"
             android:label="@string/title_activity_activity_person_add" >
         </activity>
