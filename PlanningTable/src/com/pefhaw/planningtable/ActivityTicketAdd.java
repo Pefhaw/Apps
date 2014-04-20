@@ -3,60 +3,69 @@ package com.pefhaw.planningtable;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class EditActivity extends Activity {
+
+public class ActivityTicketAdd extends Activity {
 	TextView textViewMessages;
 	EditText editTextPersonName;
-	EditText editTextPersonID;
-	EditText editTextPhone;
-	EditText editTextEmail;
+	EditText editTextTicketNumber;
+	EditText editTextSymptoms;
+	EditText editTextDiagnoses;
 	EditText editTextDetails;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit);
+		setContentView(R.layout.activity_ticket_add);
 		textViewMessages = (TextView)findViewById(R.id.textViewMessages);
 		editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
-		editTextPersonID = (EditText)findViewById(R.id.editTextPersonID);
-		editTextPhone = (EditText)findViewById(R.id.editTextPhone);
-		editTextEmail = (EditText)findViewById(R.id.editTextEmail);
+		editTextTicketNumber = (EditText)findViewById(R.id.editTextTicketNumber);
+		editTextSymptoms = (EditText)findViewById(R.id.editTextSymptoms);
+		editTextDiagnoses = (EditText)findViewById(R.id.editTextDiagnoses);
 		editTextDetails = (EditText)findViewById(R.id.editTextDetails);
-		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.activity_ticket_add, menu);
 		return true;
 	}
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
-	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-			finish(); 			 
-	    }   
-	    return true;
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	public void buttonSaveClick(View view)  {
-		String PersonName = editTextPersonName.getText().toString();
+		String TicketNumber = editTextTicketNumber.getText().toString();
 		// Create or retrieve the shared preference object.
-		int mode = Activity.MODE_PRIVATE;
-		SharedPreferences SharedPreferences = getSharedPreferences(PersonName,mode);
+		SharedPreferences SharedPreferences = getSharedPreferences(TicketNumber,Activity.MODE_PRIVATE);
 		// Retrieve an editor to modify the shared preferences.
 		SharedPreferences.Editor editor = SharedPreferences.edit();
 		// Store new primitive types in the shared preferences object.
-		editor.putString("PersonID", editTextPersonID.getText().toString());
-		editor.putString("Phone", editTextPhone.getText().toString());
-		editor.putString("Email", editTextEmail.getText().toString());
+		editor.putString("PersonName", editTextPersonName.getText().toString());
+		editor.putString("Symptoms", editTextSymptoms.getText().toString());
+		editor.putString("Diagnoses", editTextDiagnoses.getText().toString());
 		editor.putString("Details", editTextDetails.getText().toString());
 		// Commit the changes.
 		editor.commit();
 		textViewMessages.setText(editTextPersonName.getText().toString() + "'s details saved successfuly !");
 	}
+		
+		
 	public void buttonBackClick(View view)  {
 		finish();
 	}

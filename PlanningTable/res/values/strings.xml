@@ -14,5 +14,11 @@
     <string name="buttonSearch">Search</string>
     <string name="buttonBack">Back</string>
     <string name="Search">Search</string>
+    <string name="title_activity_activity_person_add">Add Person</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_activity_ticket_add">Add Ticket</string>
+    <string name="Symptoms">Symptoms</string>
+    <string name="TicketNumber">Ticket Number</string>
+    <string name="Diagnoses">Diagnoses</string>
 
 </resources>

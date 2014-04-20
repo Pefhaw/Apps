@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context="com.pefhaw.planningtable.ActivityTicketAdd$PlaceholderFragment" >
 
     <TextView
         android:id="@+id/textViewMessages"
@@ -29,44 +29,44 @@
     </EditText>
 
     <EditText
-        android:id="@+id/editTextPersonID"
+        android:id="@+id/editTextTicketNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextPersonName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/PersonID"
-        android:inputType="text|textPersonName" />
+        android:hint="@string/TicketNumber"
+        android:inputType="number" />
 
     <EditText
-        android:id="@+id/editTextPhone"
+        android:id="@+id/editTextSymptoms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPersonID"
+        android:layout_below="@+id/editTextTicketNumber"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:ems="10"
-        android:hint="@string/Phone"
-        android:inputType="phone" />
+        android:hint="@string/Symptoms"
+        android:inputType="textMultiLine" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextDiagnoses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPhone"
+        android:layout_below="@+id/editTextSymptoms"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="@string/Email"
-        android:inputType="textEmailAddress" />
+        android:hint="@string/Diagnoses"
+        android:inputType="textMultiLine" />
 
     <EditText
         android:id="@+id/editTextDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextEmail"
-        android:layout_below="@+id/editTextEmail"
+        android:layout_alignLeft="@+id/editTextDiagnoses"
+        android:layout_below="@+id/editTextDiagnoses"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="@string/Details"

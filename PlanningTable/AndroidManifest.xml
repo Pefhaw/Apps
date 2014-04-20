@@ -18,19 +18,27 @@
             android:label="@string/appName" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-	            <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-          <activity
-            android:label="@string/appName"
-            android:name=".EditActivity">
-            <intent-filter >
+        <activity
+            android:name="com.pefhaw.planningtable.EditActivity"
+            android:label="@string/appName" >
+            <intent-filter>
                 <action android:name="com.pefhaw.planningtable.EditActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-     
+        <activity
+            android:name="com.pefhaw.planningtable.ActivityPersonAdd"
+            android:label="@string/title_activity_activity_person_add" >
+        </activity>
+        <activity
+            android:name="com.pefhaw.planningtable.ActivityTicketAdd"
+            android:label="@string/title_activity_activity_ticket_add" >
+        </activity>
     </application>
 
 </manifest>
