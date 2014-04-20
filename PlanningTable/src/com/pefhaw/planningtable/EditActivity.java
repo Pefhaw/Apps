@@ -6,16 +6,18 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 public class EditActivity extends Activity {
-	Button buttonSave1;
+	TextView textMessages;
+	TextView textPersonName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit);
-		//buttonSave1 = (Button)findViewById(R.id.buttonSave);
+		textMessages = (TextView)findViewById(R.id.textMessages);
+		textPersonName = (TextView)findViewById(R.id.textPersonName);
 	}
 
 	@Override
@@ -31,7 +33,7 @@ public class EditActivity extends Activity {
 	    return true;
 	}
 	public void buttonSaveClick(View view)  {
-		String PersonName = "textPersonName";
+		String PersonName = textPersonName.getText().toString();
 		// Create or retrieve the shared preference object.
 		int mode = Activity.MODE_PRIVATE;
 		SharedPreferences SharedPreferences = getSharedPreferences(PersonName,mode);
@@ -44,5 +46,6 @@ public class EditActivity extends Activity {
 		editor.putString("textDetails", "ABCDEFGHI");
 		// Commit the changes.
 		editor.commit();
+		textMessages.setText("Saved successfuly !");
 	}
 }
