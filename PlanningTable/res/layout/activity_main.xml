@@ -15,13 +15,13 @@
         android:text="@string/app_name" />
 
     <Button
-        android:id="@+id/button_add"
+        android:id="@+id/buttonAddNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="154dp"
-        android:text="@string/button_add"
-        android:onClick="buttonAddClick"  />
+        android:onClick="buttonAddNewClick"
+        android:text="@string/buttonAddNew" />
 
 </RelativeLayout>

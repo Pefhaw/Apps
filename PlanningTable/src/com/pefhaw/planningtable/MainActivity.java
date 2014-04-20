@@ -22,10 +22,9 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void buttonAddClick(View view)  {
+	public void buttonAddNewClick(View view)  {
   		Intent EditActivity = new Intent(getBaseContext(),EditActivity.class);
-  		startActivity(EditActivity);
-	 		
+  		startActivity(EditActivity);	 		
     }
 	  
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
