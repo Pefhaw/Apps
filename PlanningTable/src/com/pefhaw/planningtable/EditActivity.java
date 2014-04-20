@@ -58,6 +58,6 @@ public class EditActivity extends Activity {
 		textViewMessages.setText(editTextPersonName.getText().toString() + "'s details saved successfuly !");
 	}
 	public void buttonBackClick(View view)  {
-		setContentView(R.layout.activity_main);
+		finish();
 	}
 }
