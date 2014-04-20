@@ -79,7 +79,6 @@
         android:layout_alignBaseline="@+id/buttonSave"
         android:layout_alignBottom="@+id/buttonSave"
         android:layout_alignRight="@+id/editTextDetails"
-        android:layout_marginRight="28dp"
         android:onClick="buttonBackClick"
         android:text="@string/buttonBack" />
 
@@ -87,8 +86,9 @@
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextDetails"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textViewMessages"
+        android:layout_marginBottom="1dp"
         android:onClick="buttonSaveClick"
         android:text="@string/buttonSave" />
 
