@@ -11,6 +11,10 @@ import android.widget.TextView;
 public class EditActivity extends Activity {
 	TextView textMessages;
 	TextView textPersonName;
+	TextView textPersonID;
+	TextView textPhone;
+	TextView textEmailAddress;
+	TextView textDetails;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,11 @@ public class EditActivity extends Activity {
 		setContentView(R.layout.activity_edit);
 		textMessages = (TextView)findViewById(R.id.textMessages);
 		textPersonName = (TextView)findViewById(R.id.textPersonName);
-	}
+		textPersonID = (TextView)findViewById(R.id.textPersonID);
+		textPhone = (TextView)findViewById(R.id.textPhone);
+		textEmailAddress = (TextView)findViewById(R.id.textEmailAddress);
+		textDetails = (TextView)findViewById(R.id.textDetails);
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,12 +48,15 @@ public class EditActivity extends Activity {
 		// Retrieve an editor to modify the shared preferences.
 		SharedPreferences.Editor editor = SharedPreferences.edit();
 		// Store new primitive types in the shared preferences object.
-		editor.putString("textPersonID", "123456789");
-		editor.putString("textPhone", "123456789");
-		editor.putString("textEmailAddress", "123456789@123456789");
-		editor.putString("textDetails", "ABCDEFGHI");
+		editor.putString("textPersonID", textPersonID.getText().toString());
+		editor.putString("textPhone", textPhone.getText().toString());
+		editor.putString("textEmailAddress", textEmailAddress.getText().toString());
+		editor.putString("textDetails", textDetails.getText().toString());
 		// Commit the changes.
 		editor.commit();
-		textMessages.setText("Saved successfuly !");
+		textMessages.setText(textPersonName.getText().toString() + "'S Details Saved successfuly !");
+	}
+	public void buttonBackClick(View view)  {
+		setContentView(R.layout.activity_main);
 	}
 }

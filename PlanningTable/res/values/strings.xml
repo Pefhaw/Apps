@@ -12,5 +12,7 @@
     <string name="EmailAddress">Email Address</string>
     <string name="Details">Details</string>
     <string name="buttonSearch">Search</string>
+    <string name="buttonBack">Back</string>
+    <string name="Search">Search</string>
 
 </resources>

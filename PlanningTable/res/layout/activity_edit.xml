@@ -73,11 +73,22 @@
         android:inputType="textMultiLine" />
 
     <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonSave"
+        android:layout_alignBottom="@+id/buttonSave"
+        android:layout_alignRight="@+id/textDetails"
+        android:layout_marginRight="28dp"
+        android:onClick="buttonBackClick"
+        android:text="@string/buttonBack" />
+
+    <Button
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@+id/textMessages"
         android:onClick="buttonSaveClick"
         android:text="@string/buttonSave" />
 
