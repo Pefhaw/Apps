@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class ActivityMain extends Activity {
 	EditText editTextPersonName;
 	TextView textViewDetails;
 

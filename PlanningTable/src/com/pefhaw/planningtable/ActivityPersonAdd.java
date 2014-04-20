@@ -75,6 +75,7 @@ public class ActivityPersonAdd extends Activity {
 			editor.putInt("TicketCount", 0);
 			// Commit the changes.
 			editor.commit();
+			textViewMessages.setText(PersonName + "'s details saved successfuly !");
 		}
 		catch (Exception e) {
 			
