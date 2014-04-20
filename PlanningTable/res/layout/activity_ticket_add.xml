@@ -12,7 +12,7 @@
         android:id="@+id/textViewMessages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/AddDataHere" />
+        android:text="@string/AddTicketDataHere" />
 
     <EditText
         android:id="@+id/editTextPersonName"
@@ -73,23 +73,33 @@
         android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonSave"
-        android:layout_alignBottom="@+id/buttonSave"
-        android:layout_alignRight="@+id/editTextDetails"
-        android:onClick="buttonBackClick"
-        android:text="@string/buttonBack" />
-
-    <Button
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextDetails"
+        android:layout_marginLeft="1dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp"
         android:onClick="buttonSaveClick"
         android:text="@string/buttonSave" />
+
+    <Button
+        android:id="@+id/buttonAddPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonSave"
+        android:layout_centerHorizontal="true"
+        android:onClick="buttonAddPersonClick"
+        android:text="@string/buttonAddPerson" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonAddPerson"
+        android:layout_alignBottom="@+id/buttonAddPerson"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="1dp"
+        android:onClick="buttonBackClick"
+        android:text="@string/buttonBack" />
 
 </RelativeLayout>

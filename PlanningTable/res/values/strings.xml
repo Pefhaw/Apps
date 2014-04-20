@@ -2,7 +2,7 @@
 <resources>
 
     <string name="appName">PlanningTable</string>
-    <string name="AddDataHere">Add data here !</string>
+    <string name="AddTicketDataHere">Add Ticket data here !</string>
     <string name="action_settings">Settings</string>
     <string name="buttonAddNew">Add New</string>
     <string name="buttonSave">Save</string>
@@ -20,5 +20,7 @@
     <string name="Symptoms">Symptoms</string>
     <string name="TicketNumber">Ticket Number</string>
     <string name="Diagnoses">Diagnoses</string>
+    <string name="buttonAddPerson">Add Person</string>
+    <string name="AddPersonDataHere">Add Person data here !</string>
 
 </resources>

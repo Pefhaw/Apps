@@ -1,6 +1,7 @@
 package com.pefhaw.planningtable;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -65,6 +66,10 @@ public class ActivityTicketAdd extends Activity {
 		textViewMessages.setText(editTextPersonName.getText().toString() + "'s details saved successfuly !");
 	}
 		
+	public void buttonAddPersonClick(View view)  {
+  		Intent ActivityPersonAdd = new Intent(getBaseContext(),ActivityPersonAdd.class);
+  		startActivity(ActivityPersonAdd);
+	}
 		
 	public void buttonBackClick(View view)  {
 		finish();

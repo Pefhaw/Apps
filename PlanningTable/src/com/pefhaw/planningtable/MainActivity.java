@@ -30,8 +30,8 @@ public class MainActivity extends Activity {
 	}
 	
 	public void buttonAddNewClick(View view)  {
-  		Intent ActivityPersonAdd = new Intent(getBaseContext(),ActivityPersonAdd.class);
-  		startActivity(ActivityPersonAdd);	 		
+  		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
+  		startActivity(ActivityTicketAdd);	 		
     }
 	
 	public void buttonSearchClick(View view)  {

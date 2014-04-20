@@ -246,11 +246,12 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f05004a
+int id action_settings 0x7f05004b
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
 int id buttonAddNew 0x7f05003d
+int id buttonAddPerson 0x7f05004a
 int id buttonBack 0x7f050045
 int id buttonSave 0x7f050046
 int id buttonSearch 0x7f050040
@@ -342,7 +343,8 @@ int layout support_simple_spinner_dropdown_item 0x7f03001b
 int menu activity_person_add 0x7f0c0000
 int menu activity_ticket_add 0x7f0c0001
 int menu main 0x7f0c0002
-int string AddDataHere 0x7f0a000e
+int string AddPersonDataHere 0x7f0a0021
+int string AddTicketDataHere 0x7f0a000e
 int string Details 0x7f0a0016
 int string Diagnoses 0x7f0a001f
 int string Email 0x7f0a0015
@@ -368,6 +370,7 @@ int string abc_shareactionprovider_share_with_application 0x7f0a000b
 int string action_settings 0x7f0a000f
 int string appName 0x7f0a000d
 int string buttonAddNew 0x7f0a0010
+int string buttonAddPerson 0x7f0a0020
 int string buttonBack 0x7f0a0018
 int string buttonSave 0x7f0a0011
 int string buttonSearch 0x7f0a0017
