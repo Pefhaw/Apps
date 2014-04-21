@@ -29,6 +29,16 @@ public class ActivityTicketAdd extends Activity {
 		editTextSymptoms = (EditText)findViewById(R.id.editTextSymptoms);
 		editTextDiagnoses = (EditText)findViewById(R.id.editTextDiagnoses);
 		editTextDetails = (EditText)findViewById(R.id.editTextDetails);
+		try {
+			// Get the stored preferences
+			SharedPreferences SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
+			// Retrieve the saved values.
+			int TicketCount = SharedPreferences.getInt("TicketCount",0);
+			editTextTicketNumber.setText(String.valueOf(TicketCount++));
+		}
+		catch (Exception e) {
+			textViewMessages.setText("Error Occurred !" + e.getMessage());
+		}
 	}
 
 	@Override
@@ -51,19 +61,37 @@ public class ActivityTicketAdd extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	public void buttonSaveClick(View view)  {
-		String TicketNumber = editTextTicketNumber.getText().toString();
-		// Create or retrieve the shared preference object.
-		SharedPreferences SharedPreferences = getSharedPreferences(TicketNumber,Activity.MODE_PRIVATE);
-		// Retrieve an editor to modify the shared preferences.
-		SharedPreferences.Editor editor = SharedPreferences.edit();
-		// Store new primitive types in the shared preferences object.
-		editor.putString("PersonName", editTextPersonName.getText().toString());
-		editor.putString("Symptoms", editTextSymptoms.getText().toString());
-		editor.putString("Diagnoses", editTextDiagnoses.getText().toString());
-		editor.putString("Details", editTextDetails.getText().toString());
-		// Commit the changes.
-		editor.commit();
-		textViewMessages.setText(editTextPersonName.getText().toString() + "'s details saved successfuly !");
+		try {
+			// Get the stored preferences
+			SharedPreferences SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
+			// Retrieve an editor to modify the shared preferences.
+			SharedPreferences.Editor editor = SharedPreferences.edit();
+			// Retrieve the saved values.
+			int TicketCount = SharedPreferences.getInt("TicketCount",0);
+			TicketCount++;
+			// Store new primitive types in the shared preferences object.
+			editor.putInt("TicketCount", TicketCount);
+			// Commit the changes.
+			editor.commit();
+			
+			editTextTicketNumber.setText(String.valueOf(TicketCount));
+			
+			// Get the stored preferences
+			SharedPreferences = getSharedPreferences(String.valueOf(TicketCount),Activity.MODE_PRIVATE);
+			// Retrieve an editor to modify the shared preferences.
+			editor = SharedPreferences.edit();
+			// Store new primitive types in the shared preferences object.
+			editor.putString("PersonName", editTextPersonName.getText().toString());
+			editor.putString("Symptoms", editTextSymptoms.getText().toString());
+			editor.putString("Diagnoses", editTextDiagnoses.getText().toString());
+			editor.putString("Details", editTextDetails.getText().toString());
+			// Commit the changes.
+			editor.commit();
+			textViewMessages.setText(editTextPersonName.getText().toString() + "'s details saved successfuly !");
+		}
+		catch (Exception e) {
+			textViewMessages.setText("Error Occurred !" + e.getMessage());
+		}
 	}
 		
 	public void buttonAddPersonClick(View view)  {
