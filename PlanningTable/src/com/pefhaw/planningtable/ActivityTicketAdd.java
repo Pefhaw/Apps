@@ -34,7 +34,8 @@ public class ActivityTicketAdd extends Activity {
 			SharedPreferences SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
 			// Retrieve the saved values.
 			int TicketCount = SharedPreferences.getInt("TicketCount",0);
-			editTextTicketNumber.setText(String.valueOf(TicketCount++));
+			TicketCount++;
+			editTextTicketNumber.setText(String.valueOf(TicketCount));
 		}
 		catch (Exception e) {
 			textViewMessages.setText("Error Occurred !" + e.getMessage());

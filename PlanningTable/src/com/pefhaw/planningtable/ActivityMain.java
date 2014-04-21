@@ -54,9 +54,8 @@ public class ActivityMain extends Activity {
   
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_MENU) {
-	//       			           Intent settingsActivity = new Intent(getBaseContext(),
-	//                                          Preferences.class);
-	//                          startActivity(settingsActivity);
+//	    	Intent settingsActivity = new Intent(getBaseContext(),Preferences.class);
+//	    	startActivity(settingsActivity);
 	    }
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
 				 	finish(); 			 
