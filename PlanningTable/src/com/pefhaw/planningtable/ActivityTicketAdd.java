@@ -88,7 +88,23 @@ public class ActivityTicketAdd extends Activity {
 			editor.putString("Details", editTextDetails.getText().toString());
 			// Commit the changes.
 			editor.commit();
-			textViewMessages.setText(editTextPersonName.getText().toString() + "'s details saved successfuly !");
+			
+			String PersonName = editTextPersonName.getText().toString();
+			
+			// Create or retrieve the shared preference object.
+			SharedPreferences = getSharedPreferences(PersonName,Activity.MODE_PRIVATE);
+			// Retrieve an editor to modify the shared preferences.
+			editor = SharedPreferences.edit();
+			// Retrieve the saved values.
+			TicketCount = SharedPreferences.getInt("TicketCount",0);
+			TicketCount++;
+			// Store new primitive types in the shared preferences object.
+			editor.putInt("TicketCount", TicketCount);
+			editor.putString(String.valueOf(TicketCount), editTextTicketNumber.getText().toString());
+			// Commit the changes.
+			editor.commit();
+			
+			textViewMessages.setText(PersonName + "'s details saved successfuly !");
 		}
 		catch (Exception e) {
 			textViewMessages.setText("Error Occurred !" + e.getMessage());

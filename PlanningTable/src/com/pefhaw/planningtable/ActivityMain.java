@@ -43,8 +43,22 @@ public class ActivityMain extends Activity {
 		String stringPersonID = SharedPreferences.getString("PersonID", "Not available !");
 		String stringPhone = SharedPreferences.getString("Phone", "Not available !");
 		String stringEmail = SharedPreferences.getString("Email", "Not available !");
-		String stringDetails = SharedPreferences.getString("Details", "Not available !");		
-		textViewDetails.setText("Person Name : " + stringPersonName + "\nPerson ID : " + stringPersonID + "\nPhone : " + stringPhone + "\nEmail : " + stringEmail + "\nDetails : " + stringDetails);
+		String stringDetails = SharedPreferences.getString("Details", "Not available !");
+		
+		int TicketCount = SharedPreferences.getInt("TicketCount", 0);
+		String Temp = "";
+        for (int i = 1; i <= TicketCount; i++) {
+        	Temp = Temp + "\nTicket Number : " + SharedPreferences.getString(String.valueOf(i),"0");
+        }
+        textViewDetails.setText("Person Name : " + stringPersonName 
+				+ "\nPerson ID : " + stringPersonID 
+				+ "\nPhone : " + stringPhone 
+				+ "\nEmail : " + stringEmail 
+				+ "\nDetails : " + stringDetails
+				+ "\nNumber of Tickets : " + TicketCount
+				+ Temp
+				+ "\n\nTicket Numbers details are as follows,"
+				);
 		}
 		catch (Exception e) {
 			//textViewMessages.setText("Error Occurred !" + e.getMessage());
