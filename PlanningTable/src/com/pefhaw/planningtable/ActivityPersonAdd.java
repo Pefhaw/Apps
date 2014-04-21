@@ -23,8 +23,8 @@ public class ActivityPersonAdd extends Activity {
 		setContentView(R.layout.activity_person_add);
 		textViewMessages = (TextView)findViewById(R.id.textViewMessages);
 		editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
-		editTextPersonID = (EditText)findViewById(R.id.editTextTicketNumber);
-		editTextPhone = (EditText)findViewById(R.id.editTextSymptoms);
+		editTextPersonID = (EditText)findViewById(R.id.editTextPersonID);
+		editTextPhone = (EditText)findViewById(R.id.editTextPhone);
 		editTextEmail = (EditText)findViewById(R.id.editTextEmail);
 		editTextDetails = (EditText)findViewById(R.id.editTextDetails);
 	}
@@ -78,7 +78,7 @@ public class ActivityPersonAdd extends Activity {
 			textViewMessages.setText(PersonName + "'s details saved successfuly !");
 		}
 		catch (Exception e) {
-			
+			textViewMessages.setText("Error Occured !" + e.getMessage());
 		}
 	}
 		

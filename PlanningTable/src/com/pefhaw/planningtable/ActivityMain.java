@@ -35,15 +35,16 @@ public class ActivityMain extends Activity {
     }
 	
 	public void buttonSearchClick(View view)  {
+		String stringPersonName = editTextPersonName.getText().toString();
 		// Get the stored preferences
 		int mode = Activity.MODE_PRIVATE;
-		SharedPreferences SharedPreferences = getSharedPreferences(editTextPersonName.getText().toString(),mode);
+		SharedPreferences SharedPreferences = getSharedPreferences(stringPersonName,mode);
 		// Retrieve the saved values.
-		String stringPersonID = SharedPreferences.getString("PersonID", "");
-		String stringPhone = SharedPreferences.getString("Phone", "");
-		String stringEmail = SharedPreferences.getString("Email", "");
-		String stringDetails = SharedPreferences.getString("Details", "");
-		textViewDetails.setText("Person Name : " + editTextPersonName.getText().toString() + "\nPerson ID : " + stringPersonID + "\nPhone : " + stringPhone + "\nEmail : " + stringEmail + "\nDetails : " + stringDetails);
+		String stringPersonID = SharedPreferences.getString("PersonID", "Not available !");
+		String stringPhone = SharedPreferences.getString("Phone", "Not available !");
+		String stringEmail = SharedPreferences.getString("Email", "Not available !");
+		String stringDetails = SharedPreferences.getString("Details", "Not available !");		
+		textViewDetails.setText("Person Name : " + stringPersonName + "\nPerson ID : " + stringPersonID + "\nPhone : " + stringPhone + "\nEmail : " + stringEmail + "\nDetails : " + stringDetails);
 	}
 		
   
