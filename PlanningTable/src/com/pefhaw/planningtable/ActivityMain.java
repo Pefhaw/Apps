@@ -46,9 +46,17 @@ public class ActivityMain extends Activity {
 		String stringDetails = SharedPreferences.getString("Details", "Not available !");
 		
 		int TicketCount = SharedPreferences.getInt("TicketCount", 0);
-		String Temp = "";
+		String stringTemp = "";
         for (int i = 1; i <= TicketCount; i++) {
-        	Temp = Temp + "\nTicket Number : " + SharedPreferences.getString(String.valueOf(i),"0");
+        	String stringTicketNumber = SharedPreferences.getString(String.valueOf(i),"0");
+        	stringTemp = stringTemp + "\n\nTicket Number : " + stringTicketNumber;
+			// Get the stored preferences
+        	SharedPreferences SharedPreferencesTemp = getSharedPreferences(stringTicketNumber,Activity.MODE_PRIVATE);
+			// Retrieve the saved values.
+        	stringTemp = stringTemp + "\nPersonName : " + SharedPreferencesTemp.getString("PersonName", "Not available !");
+        	stringTemp = stringTemp + "\nSymptoms : " + SharedPreferencesTemp.getString("Symptoms", "Not available !");
+        	stringTemp = stringTemp + "\nDiagnoses : " + SharedPreferencesTemp.getString("Diagnoses", "Not available !");
+        	stringTemp = stringTemp + "\nDetails : " + SharedPreferencesTemp.getString("Details", "Not available !");
         }
         textViewDetails.setText("Person Name : " + stringPersonName 
 				+ "\nPerson ID : " + stringPersonID 
@@ -56,8 +64,8 @@ public class ActivityMain extends Activity {
 				+ "\nEmail : " + stringEmail 
 				+ "\nDetails : " + stringDetails
 				+ "\nNumber of Tickets : " + TicketCount
-				+ Temp
 				+ "\n\nTicket Numbers details are as follows,"
+				+ stringTemp
 				);
 		}
 		catch (Exception e) {
