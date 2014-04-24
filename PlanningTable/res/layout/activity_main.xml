@@ -1,34 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ActivityMain" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+	android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="1dp"
+    android:layout_marginRight="1dp">
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="wrap_content"
+      <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ViewStub
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout="@layout/empty"/>
+    </FrameLayout>
+ <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonAddNew"
-        android:layout_alignLeft="@+id/editTextPersonName"
-        android:layout_below="@+id/editTextPersonName" >
-
-        <TextView
-            android:id="@+id/editTextDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    </ScrollView>
-
+        android:orientation="horizontal">        
+  
     <Button
         android:id="@+id/buttonAddNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scrollView1"
-        android:layout_alignParentBottom="true"
         android:layout_marginLeft="1dp"
         android:onClick="buttonAddNewClick"
         android:text="@string/buttonAddNew" />
@@ -37,8 +40,6 @@
         android:id="@+id/buttonSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollView1"
-        android:layout_alignRight="@+id/editTextPersonName"
         android:onClick="buttonSearchClick"
         android:text="@string/buttonSearch" />
 
@@ -46,11 +47,19 @@
         android:id="@+id/editTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
         android:ems="10"
         android:hint="@string/Search"
         android:inputType="textPersonName" />
+      <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/editTextDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+       </ScrollView>
+ </LinearLayout>
+</LinearLayout>

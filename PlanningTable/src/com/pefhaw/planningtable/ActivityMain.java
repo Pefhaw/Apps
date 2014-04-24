@@ -1,30 +1,70 @@
 package com.pefhaw.planningtable;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class ActivityMain extends Activity {
-	EditText editTextPersonName;
-	TextView textViewDetails;
+public class ActivityMain extends ListActivity {
+
+	private String NULL[] = {};
+	private String DATA[]={"Patient A", "Patient B"};/// to define array names
+	private DataAdapter mAdapter;
+    EditText editTextPersonName;
+    TextView textViewDetails;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
-		textViewDetails = (TextView)findViewById(R.id.editTextDetails);
+		mAdapter = new DataAdapter(NULL);
+        setListAdapter(mAdapter);
+    	
+     
+        mAdapter = new DataAdapter(DATA); // load initial array, by referring to database
+        setListAdapter(mAdapter);
+        
+        editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
+        textViewDetails = (TextView)findViewById(R.id.editTextDetails);
+	
+		   ListView list = getListView();
+			list.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+				public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {
+		/// long click event/ to delete		 
+						return true;
+				}
+			});
+	
 	}
+	
+	  protected void onListItemClick(ListView l, View v, int position, long id) {
+	      	
+	      	Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
+	  		startActivityForResult(ActivityTicketAdd,position);	
+	  }
+	   public void onActivityResult(int requestCode, int resultCode, Intent data)
+	    {
+		
+		  // update the data DATA[] here 
+		   //changeData(String[] data)
+	    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		// keep a common menu for all activities
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -44,7 +84,7 @@ public class ActivityMain extends Activity {
 		String stringPhone = SharedPreferences.getString("Phone", "Not available !");
 		String stringEmail = SharedPreferences.getString("Email", "Not available !");
 		String stringDetails = SharedPreferences.getString("Details", "Not available !");
-		
+
 		int TicketCount = SharedPreferences.getInt("TicketCount", 0);
 		String stringTemp = "";
         for (int i = 1; i <= TicketCount; i++) {
@@ -72,16 +112,61 @@ public class ActivityMain extends Activity {
 			//textViewMessages.setText("Error Occurred !" + e.getMessage());
 		}
 	}
-		
+		  	
   
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_MENU) {
-//	    	Intent settingsActivity = new Intent(getBaseContext(),Preferences.class);
-//	    	startActivity(settingsActivity);
+	//       			           Intent settingsActivity = new Intent(getBaseContext(),
+	//                                          Preferences.class);
+	//                          startActivity(settingsActivity);
 	    }
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
 				 	finish(); 			 
 	 	}   
 	 return true;
 	}
+	
+	
+	  private class DataAdapter extends BaseAdapter {
+
+	        private String[] mData;
+
+	        public DataAdapter(String[] data) {
+	            mData = data;
+	        }
+
+	        public void changeData(String[] data) {
+	            mData = data;
+	            notifyDataSetChanged();
+	        }
+
+	        public int getCount() {
+	            return mData.length;
+	        }
+
+	        public String getItem(int position) {
+	            return mData[position];
+	        }
+
+	        public long getItemId(int position) {
+	            return position;
+	        }
+
+	        public View getView(int position, View convertView, ViewGroup parent) {
+	        	View rowView = getLayoutInflater().inflate(R.layout.text_item, parent, false);
+		        TextView textView = (TextView) rowView.findViewById(R.id.label);
+		        TextView subtextView = (TextView) rowView.findViewById(R.id.subtext);        
+		        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+		        textView.setText(getItem(position));
+			    	imageView.setImageResource(R.drawable.ic_launcher);
+					textView.setText("patinet x");
+				    
+			    subtextView.setText("detail x");
+			    return rowView;	
+			}
+	        	
+	      }
+	   
+	    
+	    
 }

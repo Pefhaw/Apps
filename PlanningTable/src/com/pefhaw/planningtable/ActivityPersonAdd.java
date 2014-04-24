@@ -33,7 +33,7 @@ public class ActivityPersonAdd extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_person_add, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -54,16 +54,14 @@ public class ActivityPersonAdd extends Activity {
 			SharedPreferences SharedPreferences = getSharedPreferences("PersonNameList",Activity.MODE_PRIVATE);
 			// Retrieve an editor to modify the shared preferences.
 			SharedPreferences.Editor editor = SharedPreferences.edit();
+			String PersonName = editTextPersonName.getText().toString();
 			// Retrieve the saved values.
 			int PersonCount = SharedPreferences.getInt("PersonCount",0);
 			PersonCount++;
-			// Store new primitive types in the shared preferences object.
 			editor.putInt("PersonCount", PersonCount);
 			editor.putString(String.valueOf(PersonCount), editTextPersonName.getText().toString());
 			// Commit the changes.
 			editor.commit();
-			
-			String PersonName = editTextPersonName.getText().toString();
 			
 			// Create or retrieve the shared preference object.
 			SharedPreferences = getSharedPreferences(PersonName,Activity.MODE_PRIVATE);
@@ -80,10 +78,11 @@ public class ActivityPersonAdd extends Activity {
 			textViewMessages.setText(PersonName + "'s details saved successfuly !");
 		}
 		catch (Exception e) {
-			textViewMessages.setText("Error Occurred !" + e.getMessage());
+			textViewMessages.setText("Error Occured !" + e.getMessage());
 		}
 	}
-	
+		
+		
 	public void buttonBackClick(View view)  {
 		finish();
 	}
