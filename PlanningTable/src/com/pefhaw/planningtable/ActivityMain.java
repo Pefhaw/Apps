@@ -20,47 +20,56 @@ import android.widget.TextView;
 public class ActivityMain extends ListActivity {
 
 	private String NULL[] = {};
-	private String DATA[]={"Patient A", "Patient B"};/// to define array names
+	private String stringPersonNameList[];// Define array names
 	private DataAdapter mAdapter;
-    EditText editTextPersonName;
-    TextView textViewDetails;
+	EditText editTextPersonName;
+	TextView textViewDetails;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mAdapter = new DataAdapter(NULL);
-        setListAdapter(mAdapter);
-    	
-     
-        mAdapter = new DataAdapter(DATA); // load initial array, by referring to database
-        setListAdapter(mAdapter);
-        
-        editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
-        textViewDetails = (TextView)findViewById(R.id.editTextDetails);
-	
-		   ListView list = getListView();
-			list.setOnItemLongClickListener(new OnItemLongClickListener() {
+		editTextPersonName = (EditText)findViewById(R.id.editTextPersonName);
+		textViewDetails = (TextView)findViewById(R.id.editTextDetails);
 
-				public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {
-		/// long click event/ to delete		 
-						return true;
-				}
-			});
-	
+		mAdapter = new DataAdapter(NULL);
+		setListAdapter(mAdapter);
+
+		try {
+			// Get the stored preferences
+			SharedPreferences SharedPreferences = getSharedPreferences("PersonNameList",Activity.MODE_PRIVATE);
+			// Retrieve the saved values.
+			int PersonCount = SharedPreferences.getInt("PersonCount",0);
+			stringPersonNameList = new String[PersonCount];
+			for (int i = 0; i < PersonCount; i++) {
+				stringPersonNameList[i] = SharedPreferences.getString(String.valueOf(i+1),"Not available !");
+			}
+		}
+		catch (Exception e) {
+			textViewDetails.append("Error Occurred !/n" + e.getMessage());
+		}
+
+		mAdapter = new DataAdapter(stringPersonNameList); // Load initial array by referring PersonNameList to database
+		setListAdapter(mAdapter);
+
+		ListView list = getListView();
+		list.setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {
+				// long click event/ to delete
+				return true;}
+		});
 	}
-	
-	  protected void onListItemClick(ListView l, View v, int position, long id) {
-	      	
-	      	Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
-	  		startActivityForResult(ActivityTicketAdd,position);	
-	  }
-	   public void onActivityResult(int requestCode, int resultCode, Intent data)
-	    {
-		
-		  // update the data DATA[] here 
-		   //changeData(String[] data)
-	    }
+
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+
+		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
+		startActivityForResult(ActivityTicketAdd,position);
+	}
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		//update the data DATA[] here 
+		//changeData(String[] data)
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,105 +77,65 @@ public class ActivityMain extends ListActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	public void buttonAddNewClick(View view)  {
-  		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
-  		startActivity(ActivityTicketAdd);	 		
-    }
-	
-	public void buttonSearchClick(View view)  {
-		try {
-		String stringPersonName = editTextPersonName.getText().toString();
-		// Get the stored preferences
-		SharedPreferences SharedPreferences = getSharedPreferences(stringPersonName,Activity.MODE_PRIVATE);
-		// Retrieve the saved values.
-		String stringPersonID = SharedPreferences.getString("PersonID", "Not available !");
-		String stringPhone = SharedPreferences.getString("Phone", "Not available !");
-		String stringEmail = SharedPreferences.getString("Email", "Not available !");
-		String stringDetails = SharedPreferences.getString("Details", "Not available !");
-
-		int TicketCount = SharedPreferences.getInt("TicketCount", 0);
-		String stringTemp = "";
-        for (int i = 1; i <= TicketCount; i++) {
-        	String stringTicketNumber = SharedPreferences.getString(String.valueOf(i),"0");
-        	stringTemp = stringTemp + "\n\nTicket Number : " + stringTicketNumber;
-			// Get the stored preferences
-        	SharedPreferences SharedPreferencesTemp = getSharedPreferences(stringTicketNumber,Activity.MODE_PRIVATE);
-			// Retrieve the saved values.
-        	stringTemp = stringTemp + "\nPersonName : " + SharedPreferencesTemp.getString("PersonName", "Not available !");
-        	stringTemp = stringTemp + "\nSymptoms : " + SharedPreferencesTemp.getString("Symptoms", "Not available !");
-        	stringTemp = stringTemp + "\nDiagnoses : " + SharedPreferencesTemp.getString("Diagnoses", "Not available !");
-        	stringTemp = stringTemp + "\nDetails : " + SharedPreferencesTemp.getString("Details", "Not available !");
-        }
-        textViewDetails.setText("Person Name : " + stringPersonName 
-				+ "\nPerson ID : " + stringPersonID 
-				+ "\nPhone : " + stringPhone 
-				+ "\nEmail : " + stringEmail 
-				+ "\nDetails : " + stringDetails
-				+ "\nNumber of Tickets : " + TicketCount
-				+ "\n\nTicket Numbers details are as follows,"
-				+ stringTemp
-				);
-		}
-		catch (Exception e) {
-			//textViewMessages.setText("Error Occurred !" + e.getMessage());
-		}
+		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
+		startActivity(ActivityTicketAdd);	 		
 	}
-		  	
-  
+
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-	    if (keyCode == KeyEvent.KEYCODE_MENU) {
-	//       			           Intent settingsActivity = new Intent(getBaseContext(),
-	//                                          Preferences.class);
-	//                          startActivity(settingsActivity);
-	    }
-	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-				 	finish(); 			 
-	 	}   
-	 return true;
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			// Intent settingsActivity = new Intent(getBaseContext(), Preferences.class);
+			// startActivity(settingsActivity);
+		}
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+		}
+		return true;
 	}
-	
-	
-	  private class DataAdapter extends BaseAdapter {
 
-	        private String[] mData;
+	private class DataAdapter extends BaseAdapter {
+		private String[] mData;
 
-	        public DataAdapter(String[] data) {
-	            mData = data;
-	        }
+		public DataAdapter(String[] data) {
+			mData = data;
+		}
 
-	        public void changeData(String[] data) {
-	            mData = data;
-	            notifyDataSetChanged();
-	        }
+		public void changeData(String[] data) {
+			mData = data;
+			notifyDataSetChanged();
+		}
 
-	        public int getCount() {
-	            return mData.length;
-	        }
+		public int getCount() {
+			return mData.length;
+		}
 
-	        public String getItem(int position) {
-	            return mData[position];
-	        }
+		public String getItem(int position) {
+			return mData[position];
+		}
 
-	        public long getItemId(int position) {
-	            return position;
-	        }
+		public long getItemId(int position) {
+			return position;
+		}
 
-	        public View getView(int position, View convertView, ViewGroup parent) {
-	        	View rowView = getLayoutInflater().inflate(R.layout.text_item, parent, false);
-		        TextView textView = (TextView) rowView.findViewById(R.id.label);
-		        TextView subtextView = (TextView) rowView.findViewById(R.id.subtext);        
-		        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-		        textView.setText(getItem(position));
-			    	imageView.setImageResource(R.drawable.ic_launcher);
-					textView.setText("patinet x");
-				    
-			    subtextView.setText("detail x");
-			    return rowView;	
-			}
-	        	
-	      }
-	   
-	    
-	    
+		public String getTicketCount(int position) {
+			// Get the stored preferences
+			SharedPreferences SharedPreferences = getSharedPreferences(getItem(position),Activity.MODE_PRIVATE);
+			// Retrieve the saved values.
+			return String.valueOf(SharedPreferences.getInt("TicketCount", 0));
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+
+			View rowView = getLayoutInflater().inflate(R.layout.text_item, parent, false);
+			ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+			TextView textView = (TextView) rowView.findViewById(R.id.label);
+			TextView subtextView = (TextView) rowView.findViewById(R.id.subtext);        
+
+			imageView.setImageResource(R.drawable.ic_launcher);    
+			textView.setText("Patient : " + getItem(position));		           
+			subtextView.setText("Ticket Count : " + getTicketCount(position));
+			return rowView;
+		}
+	}
 }
