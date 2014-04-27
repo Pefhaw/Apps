@@ -79,7 +79,6 @@
         android:layout_marginLeft="1dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp"
-        android:onClick="buttonSaveClick"
         android:text="@string/buttonSave" />
 
     <Button
@@ -88,7 +87,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/buttonSave"
         android:layout_centerHorizontal="true"
-        android:onClick="buttonAddPersonClick"
         android:text="@string/buttonAddPerson" />
 
     <Button
@@ -99,7 +97,6 @@
         android:layout_alignBottom="@+id/buttonAddPerson"
         android:layout_alignParentRight="true"
         android:layout_marginRight="1dp"
-        android:onClick="buttonBackClick"
         android:text="@string/buttonBack" />
 
 </RelativeLayout>
