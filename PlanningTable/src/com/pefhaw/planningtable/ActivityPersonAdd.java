@@ -65,6 +65,16 @@ public class ActivityPersonAdd extends Activity {
 					editor.putInt("TicketCount", 0);
 					// Commit the changes.
 					editor.commit();
+					
+					// Get the stored preferences
+					SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
+					// Retrieve an editor to modify the shared preferences.
+					editor = SharedPreferences.edit();
+					// Store new primitive types in the shared preferences object.
+					editor.putString("SelectedPersonName", PersonName);
+					// Commit the changes.
+					editor.commit();
+					
 					textViewMessages.setText(PersonName + "'s details saved successfuly !");
 				}
 				catch (Exception e) {

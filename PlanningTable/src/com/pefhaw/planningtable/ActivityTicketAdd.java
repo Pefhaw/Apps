@@ -38,9 +38,14 @@ public class ActivityTicketAdd extends Activity {
 		buttonSave = (Button)findViewById(R.id.buttonSave);
 		buttonAddPerson = (Button)findViewById(R.id.buttonAddPerson);
 		buttonBack = (Button)findViewById(R.id.buttonBack);
-		try {
+		try {		
 			// Get the stored preferences
-			SharedPreferences SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
+			SharedPreferences SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
+			// Retrieve the saved values.
+			editTextPersonName.setText(SharedPreferences.getString("SelectedPersonName",""));
+			
+			// Get the stored preferences
+			SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
 			// Retrieve the saved values.
 			int TicketCount = SharedPreferences.getInt("TicketCount",0);
 			TicketCount++;

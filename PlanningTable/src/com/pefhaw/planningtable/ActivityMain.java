@@ -30,47 +30,63 @@ public class ActivityMain extends ListActivity {
 
 	private ArrayList<String> stringPersonNameList; ;// Define array names // May use 'Person' array instead of 'String' 
 	private DataAdapter mAdapter;
-	EditText txtsearch;
+	EditText editTextSearchText;
 	Button buttonAddNew;
 
 	// Called at the start of the active lifetime.
 	@Override
 	public void onResume(){
-		// TODO Auto-generated method stub
 		super.onResume();
 		setContentView(R.layout.activity_main);
 
-		txtsearch = (EditText) findViewById(R.id.txtsearch);
+		editTextSearchText = (EditText) findViewById(R.id.editTextSearchText);
 		buttonAddNew = (Button)findViewById(R.id.buttonAddNew);
-		ListView list = getListView();
+		ListView listViewDetailList = getListView();
 
-		list.setTextFilterEnabled(true);
+		listViewDetailList.setTextFilterEnabled(true);
 
-		list.setOnItemLongClickListener(new OnItemLongClickListener() {
-			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {
-				// long click event/ to delete
-				return true;}
+		listViewDetailList.setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {				
+				try {
+					// Get the stored preferences
+					SharedPreferences SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
+					// Retrieve an editor to modify the shared preferences.
+					SharedPreferences.Editor editor = SharedPreferences.edit();
+					// Store new primitive types in the shared preferences object.
+					editor.putString("SelectedPersonName", mAdapter.getItem(position));
+					// Commit the changes.
+					editor.commit();
+				}
+				catch (Exception e) {
+					editTextSearchText.setText("Error Occurred !" + e.getMessage());
+				}
+				Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
+				startActivityForResult(ActivityTicketAdd,position);
+
+				// long click event to add
+				return true;
+			}
 		});
 
-		txtsearch.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				mAdapter.getFilter().filter(s.toString());
+		editTextSearchText.addTextChangedListener(new TextWatcher() {
+			public void onTextChanged(CharSequence charSequenceSearchText, int start, int before, int count) {
+				mAdapter.getFilter().filter(charSequenceSearchText.toString());
 			}
 
-			public void beforeTextChanged(CharSequence s, int start, int count,	int after) {
+			public void beforeTextChanged(CharSequence charSequenceSearchText, int start, int count,	int after) {
 			}
 
 			public void afterTextChanged(Editable theWatchedText) {
 				mAdapter.getFilter().filter(theWatchedText);
 			}
 		});
-		
+
 		buttonAddNew.setOnClickListener(new OnClickListener() {
-        	public void onClick(View view) {
-        		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
-        		startActivity(ActivityTicketAdd);
-        	}
-        });
+			public void onClick(View view) {
+				Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
+				startActivity(ActivityTicketAdd);
+			}
+		});
 
 		try {
 			// Get the stored preferences
@@ -80,22 +96,41 @@ public class ActivityMain extends ListActivity {
 			stringPersonNameList = new ArrayList<String>();
 			for (int i = 0; i < PersonCount; i++) {
 				stringPersonNameList.add(SharedPreferences.getString(String.valueOf(i+1),"Not available !"));
-
-			}
+			}			
+			// Get the stored preferences
+			SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
+			// Retrieve an editor to modify the shared preferences.
+			SharedPreferences.Editor editor = SharedPreferences.edit();
+			// Store new primitive types in the shared preferences object.
+			editor.putString("SelectedPersonName", "");
+			// Commit the changes.
+			editor.commit();
 		}
 		catch (Exception e) {
-			txtsearch.append("Error Occurred !/n" + e.getMessage());
+			editTextSearchText.append("Error Occurred !/n" + e.getMessage());
 		}
 		mAdapter = new DataAdapter(this.getBaseContext(),stringPersonNameList); // Load initial array by referring PersonNameList to database
 		setListAdapter(mAdapter);
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-
+		try {
+			// Get the stored preferences
+			SharedPreferences SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
+			// Retrieve an editor to modify the shared preferences.
+			SharedPreferences.Editor editor = SharedPreferences.edit();
+			// Store new primitive types in the shared preferences object.
+			editor.putString("SelectedPersonName", mAdapter.getItem(position));
+			// Commit the changes.
+			editor.commit();
+		}
+		catch (Exception e) {
+			editTextSearchText.setText("Error Occurred !" + e.getMessage());
+		}
 		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
 		startActivityForResult(ActivityTicketAdd,position);
 	}
-	
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		//update the data DATA[] here 
@@ -221,4 +256,5 @@ public class ActivityMain extends ListActivity {
 		}
 
 	}
+
 }
