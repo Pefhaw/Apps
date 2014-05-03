@@ -2,7 +2,6 @@ package com.pefhaw.planningtable;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 public class ActivityTicketAdd extends Activity {
+	private PTDatabase aPTDatabase;
 	TextView textViewMessages;
 	EditText editTextPersonName;
 	EditText editTextTicketNumber;
@@ -26,7 +25,6 @@ public class ActivityTicketAdd extends Activity {
 	// Called at the start of the active lifetime.
 	@Override
 	public void onResume(){
-		// TODO Auto-generated method stub
 		super.onResume();
 		setContentView(R.layout.activity_ticket_add);
 		textViewMessages = (TextView)findViewById(R.id.textViewMessages);
@@ -38,72 +36,15 @@ public class ActivityTicketAdd extends Activity {
 		buttonSave = (Button)findViewById(R.id.buttonSave);
 		buttonAddPerson = (Button)findViewById(R.id.buttonAddPerson);
 		buttonBack = (Button)findViewById(R.id.buttonBack);
-		try {		
-			// Get the stored preferences
-			SharedPreferences SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
-			// Retrieve the saved values.
-			editTextPersonName.setText(SharedPreferences.getString("SelectedPersonName",""));
-			
-			// Get the stored preferences
-			SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
-			// Retrieve the saved values.
-			int TicketCount = SharedPreferences.getInt("TicketCount",0);
-			TicketCount++;
-			editTextTicketNumber.setText(String.valueOf(TicketCount));
-		}
-		catch (Exception e) {
-			textViewMessages.setText("Error Occurred !" + e.getMessage());
-		}
+
+		aPTDatabase = new PTDatabase(this);
+
+		editTextPersonName.setText(aPTDatabase.getTemporaryVariable("SelectedPersonName"));
+		editTextTicketNumber.setText(String.valueOf(aPTDatabase.getTotalTicketCount()+1));
 
 		buttonSave.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				try {
-					// Get the stored preferences
-					SharedPreferences SharedPreferences = getSharedPreferences("TicketCount",Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					SharedPreferences.Editor editor = SharedPreferences.edit();
-					// Retrieve the saved values.
-					int TicketCount = SharedPreferences.getInt("TicketCount",0);
-					TicketCount++;
-					// Store new primitive types in the shared preferences object.
-					editor.putInt("TicketCount", TicketCount);
-					// Commit the changes.
-					editor.commit();
-
-					editTextTicketNumber.setText(String.valueOf(TicketCount));
-
-					// Get the stored preferences
-					SharedPreferences = getSharedPreferences(String.valueOf(TicketCount),Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					editor = SharedPreferences.edit();
-					// Store new primitive types in the shared preferences object.
-					editor.putString("PersonName", editTextPersonName.getText().toString());
-					editor.putString("Symptoms", editTextSymptoms.getText().toString());
-					editor.putString("Diagnoses", editTextDiagnoses.getText().toString());
-					editor.putString("Details", editTextDetails.getText().toString());
-					// Commit the changes.
-					editor.commit();
-
-					String PersonName = editTextPersonName.getText().toString();
-
-					// Create or retrieve the shared preference object.
-					SharedPreferences = getSharedPreferences(PersonName,Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					editor = SharedPreferences.edit();
-					// Retrieve the saved values.
-					TicketCount = SharedPreferences.getInt("TicketCount",0);
-					TicketCount++;
-					// Store new primitive types in the shared preferences object.
-					editor.putInt("TicketCount", TicketCount);
-					editor.putString(String.valueOf(TicketCount), editTextTicketNumber.getText().toString());
-					// Commit the changes.
-					editor.commit();
-
-					textViewMessages.setText(PersonName + "'s details saved successfuly !");
-				}
-				catch (Exception e) {
-					textViewMessages.setText("Error Occurred !" + e.getMessage());
-				}
+				textViewMessages.setText(aPTDatabase.addTicket(editTextPersonName.getText().toString(), editTextSymptoms.getText().toString(), editTextDiagnoses.getText().toString(), editTextDetails.getText().toString()));
 			}
 		});
 

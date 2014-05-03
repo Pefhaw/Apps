@@ -27,7 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class ActivityMain extends ListActivity {
-
+	private PTDatabase aPTDatabase;
 	private ArrayList<String> stringPersonNameList; ;// Define array names // May use 'Person' array instead of 'String' 
 	private DataAdapter mAdapter;
 	EditText editTextSearchText;
@@ -41,6 +41,9 @@ public class ActivityMain extends ListActivity {
 
 		editTextSearchText = (EditText) findViewById(R.id.editTextSearchText);
 		buttonAddNew = (Button)findViewById(R.id.buttonAddNew);
+		
+		aPTDatabase = new PTDatabase(this);
+		
 		ListView listViewDetailList = getListView();
 
 		listViewDetailList.setTextFilterEnabled(true);
@@ -96,15 +99,8 @@ public class ActivityMain extends ListActivity {
 			stringPersonNameList = new ArrayList<String>();
 			for (int i = 0; i < PersonCount; i++) {
 				stringPersonNameList.add(SharedPreferences.getString(String.valueOf(i+1),"Not available !"));
-			}			
-			// Get the stored preferences
-			SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
-			// Retrieve an editor to modify the shared preferences.
-			SharedPreferences.Editor editor = SharedPreferences.edit();
-			// Store new primitive types in the shared preferences object.
-			editor.putString("SelectedPersonName", "");
-			// Commit the changes.
-			editor.commit();
+			}		
+			aPTDatabase.setTemporaryVariable("SelectedPersonName", ""); // Reset previously clicked SelectedPersonName of Listview.
 		}
 		catch (Exception e) {
 			editTextSearchText.append("Error Occurred !/n" + e.getMessage());
@@ -114,19 +110,8 @@ public class ActivityMain extends ListActivity {
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		try {
-			// Get the stored preferences
-			SharedPreferences SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
-			// Retrieve an editor to modify the shared preferences.
-			SharedPreferences.Editor editor = SharedPreferences.edit();
-			// Store new primitive types in the shared preferences object.
-			editor.putString("SelectedPersonName", mAdapter.getItem(position));
-			// Commit the changes.
-			editor.commit();
-		}
-		catch (Exception e) {
-			editTextSearchText.setText("Error Occurred !" + e.getMessage());
-		}
+		aPTDatabase.setTemporaryVariable("SelectedPersonName", mAdapter.getItem(position));
+
 		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
 		startActivityForResult(ActivityTicketAdd,position);
 	}

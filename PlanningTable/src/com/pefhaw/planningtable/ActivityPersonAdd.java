@@ -1,7 +1,6 @@
 package com.pefhaw.planningtable;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class ActivityPersonAdd extends Activity {
+	private PTDatabase aPTDatabase;
 	TextView textViewMessages;
 	EditText editTextPersonName;
 	EditText editTextPersonID;
@@ -23,7 +23,6 @@ public class ActivityPersonAdd extends Activity {
 	// Called at the start of the active lifetime.
 	@Override
 	public void onResume(){
-		// TODO Auto-generated method stub
 		super.onResume();
 		setContentView(R.layout.activity_person_add);
 		textViewMessages = (TextView)findViewById(R.id.textViewMessages);
@@ -34,52 +33,12 @@ public class ActivityPersonAdd extends Activity {
 		editTextDetails = (EditText)findViewById(R.id.editTextDetails);
 		buttonSave = (Button)findViewById(R.id.buttonSave);
 		buttonBack = (Button)findViewById(R.id.buttonBack);
-
+		
+		aPTDatabase = new PTDatabase(this);
+		
 		buttonSave.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				try {
-					// Get the stored preferences
-					SharedPreferences SharedPreferences = getSharedPreferences("PersonNameList",Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					SharedPreferences.Editor editor = SharedPreferences.edit();
-					// Retrieve the saved values.
-					int PersonCount = SharedPreferences.getInt("PersonCount",0);
-					PersonCount++;
-					// Store new primitive types in the shared preferences object.
-					editor.putInt("PersonCount", PersonCount);
-					editor.putString(String.valueOf(PersonCount), editTextPersonName.getText().toString());
-					// Commit the changes.
-					editor.commit();
-
-					String PersonName = editTextPersonName.getText().toString();
-
-					// Create or retrieve the shared preference object.
-					SharedPreferences = getSharedPreferences(PersonName,Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					editor = SharedPreferences.edit();
-					// Store new primitive types in the shared preferences object.
-					editor.putString("PersonID", editTextPersonID.getText().toString());
-					editor.putString("Phone", editTextPhone.getText().toString());
-					editor.putString("Email", editTextEmail.getText().toString());
-					editor.putString("Details", editTextDetails.getText().toString());
-					editor.putInt("TicketCount", 0);
-					// Commit the changes.
-					editor.commit();
-					
-					// Get the stored preferences
-					SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					editor = SharedPreferences.edit();
-					// Store new primitive types in the shared preferences object.
-					editor.putString("SelectedPersonName", PersonName);
-					// Commit the changes.
-					editor.commit();
-					
-					textViewMessages.setText(PersonName + "'s details saved successfuly !");
-				}
-				catch (Exception e) {
-					textViewMessages.setText("Error Occurred !" + e.getMessage());
-				}
+				textViewMessages.setText(aPTDatabase.addPerson(editTextPersonName.getText().toString(), editTextPersonID.getText().toString(), editTextPhone.getText().toString(), editTextEmail.getText().toString(), editTextEmail.getText().toString()));
 			}
 		});
 
@@ -110,4 +69,3 @@ public class ActivityPersonAdd extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 }
-
