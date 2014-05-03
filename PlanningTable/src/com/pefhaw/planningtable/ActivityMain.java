@@ -2,11 +2,9 @@ package com.pefhaw.planningtable;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -28,7 +26,6 @@ import android.widget.TextView;
 
 public class ActivityMain extends ListActivity {
 	private PTDatabase aPTDatabase;
-	private ArrayList<String> stringPersonNameList; ;// Define array names // May use 'Person' array instead of 'String' 
 	private DataAdapter mAdapter;
 	EditText editTextSearchText;
 	Button buttonAddNew;
@@ -38,35 +35,26 @@ public class ActivityMain extends ListActivity {
 	public void onResume(){
 		super.onResume();
 		setContentView(R.layout.activity_main);
-
 		editTextSearchText = (EditText) findViewById(R.id.editTextSearchText);
 		buttonAddNew = (Button)findViewById(R.id.buttonAddNew);
 		
 		aPTDatabase = new PTDatabase(this);
 		
 		ListView listViewDetailList = getListView();
-
 		listViewDetailList.setTextFilterEnabled(true);
+		
+		aPTDatabase.setTemporaryVariable("SelectedPersonName", ""); // Reset previously clicked PersonName of List View.
 
+		mAdapter = new DataAdapter(this.getBaseContext(),aPTDatabase.getPersonNameList()); // Load initial array by referring to database
+		setListAdapter(mAdapter);
+		
 		listViewDetailList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {				
-				try {
-					// Get the stored preferences
-					SharedPreferences SharedPreferences = getSharedPreferences("Temp",Activity.MODE_PRIVATE);
-					// Retrieve an editor to modify the shared preferences.
-					SharedPreferences.Editor editor = SharedPreferences.edit();
-					// Store new primitive types in the shared preferences object.
-					editor.putString("SelectedPersonName", mAdapter.getItem(position));
-					// Commit the changes.
-					editor.commit();
-				}
-				catch (Exception e) {
-					editTextSearchText.setText("Error Occurred !" + e.getMessage());
-				}
+				aPTDatabase.setTemporaryVariable("SelectedPersonName", mAdapter.getItem(position));  // Save clicked PersonName of List View.
+
 				Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
 				startActivityForResult(ActivityTicketAdd,position);
 
-				// long click event to add
 				return true;
 			}
 		});
@@ -90,23 +78,6 @@ public class ActivityMain extends ListActivity {
 				startActivity(ActivityTicketAdd);
 			}
 		});
-
-		try {
-			// Get the stored preferences
-			SharedPreferences SharedPreferences = getSharedPreferences("PersonNameList",Activity.MODE_PRIVATE);
-			// Retrieve the saved values.
-			int PersonCount = SharedPreferences.getInt("PersonCount",0);
-			stringPersonNameList = new ArrayList<String>();
-			for (int i = 0; i < PersonCount; i++) {
-				stringPersonNameList.add(SharedPreferences.getString(String.valueOf(i+1),"Not available !"));
-			}		
-			aPTDatabase.setTemporaryVariable("SelectedPersonName", ""); // Reset previously clicked SelectedPersonName of Listview.
-		}
-		catch (Exception e) {
-			editTextSearchText.append("Error Occurred !/n" + e.getMessage());
-		}
-		mAdapter = new DataAdapter(this.getBaseContext(),stringPersonNameList); // Load initial array by referring PersonNameList to database
-		setListAdapter(mAdapter);
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -118,8 +89,7 @@ public class ActivityMain extends ListActivity {
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		//update the data DATA[] here 
-		//changeData(String[] data)
+		//Update changeData here
 	}
 
 	@Override
@@ -198,7 +168,6 @@ public class ActivityMain extends ListActivity {
 				}
 
 				public boolean onLoadClass(Class arg0) {
-					// TODO Auto-generated method stub
 					return false;
 				}
 			};
@@ -220,13 +189,6 @@ public class ActivityMain extends ListActivity {
 			return position;
 		}
 
-		public String getTicketCount(int position) {
-			// Get the stored preferences
-			SharedPreferences SharedPreferences = getSharedPreferences(getItem(position),Activity.MODE_PRIVATE);
-			// Retrieve the saved values.
-			return String.valueOf(SharedPreferences.getInt("TicketCount", 0));
-		}
-
 		public View getView(int position, View convertView, ViewGroup parent) {
 
 			View rowView = getLayoutInflater().inflate(R.layout.text_item, parent, false);
@@ -234,12 +196,10 @@ public class ActivityMain extends ListActivity {
 			TextView textView = (TextView) rowView.findViewById(R.id.label);
 			TextView subtextView = (TextView) rowView.findViewById(R.id.subtext);        
 
-			imageView.setImageResource(R.drawable.ic_launcher);    
-			textView.setText("Patient : " + getItem(position));		           
-			subtextView.setText("Ticket Count : " + getTicketCount(position));
+			imageView.setImageResource(R.drawable.ic_launcher);
+			textView.setText("Patient : " + getItem(position));	
+			subtextView.setText("Ticket Count : " + String.valueOf(aPTDatabase.getPersonTicketCount(getItem(position))));
 			return rowView;
 		}
-
 	}
-
 }
