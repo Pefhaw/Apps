@@ -1,21 +1,28 @@
 package com.pefhaw.planningtable;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class PTDatabase{
 	Context context = null;
+	private SharedPreferences mPrefs;
+	private Editor editor;
+	private ArrayList<PTS> PersonList;
 
-	public PTDatabase(Context context) {
+public PTDatabase(Context context) {
 		this.context = context;
-	}
-
+}
+	
 	public String addPerson(String stringPersonName,String stringPersonID, String stringPhone, String stringEmail, String stringDetails) {
-		try {
-			// Get the stored preferences
+//		try {
+/*			// Get the stored preferences
 			SharedPreferences SharedPreferences = this.context.getSharedPreferences("PersonNameList",Activity.MODE_PRIVATE);
 			// Retrieve an editor to modify the shared preferences.
 			SharedPreferences.Editor editor = SharedPreferences.edit();
@@ -47,7 +54,41 @@ public class PTDatabase{
 		catch (Exception e) {
 			return "Error Occurred ! " + e.getMessage();
 		}
-		return "Person '" + stringPersonName + "' is added !";
+		*/
+				mPrefs = this.context.getSharedPreferences("ObjectList",Activity.MODE_PRIVATE);
+				editor = mPrefs.edit();
+
+			
+				int id=1;/// integer ID
+				PTS myObject = new PTS();
+	            myObject.setValues(
+	            		id
+	            		,stringPersonName
+	            		,stringPersonID
+	            		,stringEmail
+	            		,stringDetails);
+	            
+            	PersonList = getObject();	
+	        	
+	             if(PersonList!= null){
+	            	 PersonList.add(myObject);
+	             }else{
+	            	 PersonList = new ArrayList<PTS>();	
+	            	 PersonList.add(myObject);
+	             }
+	         	
+			if (saveObject(PersonList)){             
+			return "Person '" + stringPersonName + "' is added !";
+		}else{
+			return "error occured";
+		}
+	}
+
+	
+	public boolean deletePerson(int position) {
+	
+			// this will delete the 'position' detail in the share preferences 
+		return true;
 	}
 
 	public String addTicket(String stringPersonName,String stringSymptoms, String stringDiagnoses, String stringDetails) {
@@ -128,7 +169,7 @@ public class PTDatabase{
 
 	public ArrayList<String> getPersonNameList()
 	{
-		ArrayList<String> stringPersonNameList;
+/*		ArrayList<String> stringPersonNameList;
 			try {
 			// Get the stored preferences
 			SharedPreferences SharedPreferences = this.context.getSharedPreferences("PersonNameList",Activity.MODE_PRIVATE);
@@ -143,6 +184,27 @@ public class PTDatabase{
 			return new ArrayList<String>();//Error Occurred.
 		}
 		return stringPersonNameList;
+*/
+		
+		ArrayList<String> stringPersonNameList;
+		try {
+		// Get the stored preferences
+		mPrefs = this.context.getSharedPreferences("ObjectList",Activity.MODE_PRIVATE);
+		// Retrieve the saved values.
+		 ArrayList<PTS> mygetObject = getObject();
+		 stringPersonNameList = new ArrayList<String>();
+	     if(mygetObject != null){	    	 				/// now this can directly pass the object array list too
+	    	 for (int i = 0; i <mygetObject.size() ; i++) {
+	    		 stringPersonNameList.add(mygetObject.get(i).getValue());	
+	    	 }
+	     }
+		}
+	catch (Exception e) {
+		return new ArrayList<String>();//Error Occurred.
+	}
+	return stringPersonNameList;
+
+
 	}
 	
 	public int getPersonTicketCount(String stringPersonName)
@@ -174,4 +236,29 @@ public class PTDatabase{
 		}
 		return TotalTicketCount;
 	}
+	
+	
+    public ArrayList<PTS> getObject(){				//returns saved array list
+    	Gson gson = new Gson();
+        String json = mPrefs.getString("MyArray", "");
+        Type listType = new TypeToken<ArrayList<PTS>>() {
+        }.getType();
+        ArrayList<PTS> obj = gson.fromJson(json, listType);
+        return obj ;
+    }
+    
+    public boolean saveObject(ArrayList<PTS> array){			/// save array lisy
+    	 Gson gson = new Gson();
+         String json = gson.toJson(array);
+         editor.putString("MyArray", json);
+         editor.commit();
+         return true;
+    }
+	
 }
+
+
+
+
+
+

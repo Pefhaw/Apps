@@ -2,9 +2,12 @@ package com.pefhaw.planningtable;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -23,42 +26,33 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ActivityMain extends ListActivity {
 	private PTDatabase aPTDatabase;
 	private DataAdapter mAdapter;
 	EditText editTextSearchText;
 	Button buttonAddNew;
+	private int recordposition;
 
-	// Called at the start of the active lifetime.
-	@Override
-	public void onResume(){
-		super.onResume();
-		setContentView(R.layout.activity_main);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {			/// on create used for initiation activities 
+        super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
 		editTextSearchText = (EditText) findViewById(R.id.editTextSearchText);
 		buttonAddNew = (Button)findViewById(R.id.buttonAddNew);
-		
 		aPTDatabase = new PTDatabase(this);
-		
 		ListView listViewDetailList = getListView();
 		listViewDetailList.setTextFilterEnabled(true);
 		
-		aPTDatabase.setTemporaryVariable("SelectedPersonName", ""); // Reset previously clicked PersonName of List View.
-
-		mAdapter = new DataAdapter(this.getBaseContext(),aPTDatabase.getPersonNameList()); // Load initial array by referring to database
-		setListAdapter(mAdapter);
 		
-		listViewDetailList.setOnItemLongClickListener(new OnItemLongClickListener() {
-			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {				
-				aPTDatabase.setTemporaryVariable("SelectedPersonName", mAdapter.getItem(position));  // Save clicked PersonName of List View.
-
-				Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
-				startActivityForResult(ActivityTicketAdd,position);
-
-				return true;
+		buttonAddNew.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				Intent ActivityPersonAdd = new Intent(getBaseContext(),ActivityPersonAdd.class);
+				startActivity(ActivityPersonAdd);
 			}
 		});
-
+		
 		editTextSearchText.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(CharSequence charSequenceSearchText, int start, int before, int count) {
 				mAdapter.getFilter().filter(charSequenceSearchText.toString());
@@ -71,25 +65,69 @@ public class ActivityMain extends ListActivity {
 				mAdapter.getFilter().filter(theWatchedText);
 			}
 		});
+		
+		listViewDetailList.setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long clickid) {				
 
-		buttonAddNew.setOnClickListener(new OnClickListener() {
-			public void onClick(View view) {
-				Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
-				startActivity(ActivityTicketAdd);
+				// Add Delete message, and delete an entry		
+				recordposition=position;
+	
+				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+		  	    public void onClick(DialogInterface dialog, int which) {
+			        switch (which){
+			        case DialogInterface.BUTTON_POSITIVE:
+			        {
+			            //Yes button clicked
+			        	aPTDatabase.deletePerson(recordposition);
+						
+						//setResult(RESULT_CANCELED,AddIntent);
+			        }
+			            break;
+
+			        case DialogInterface.BUTTON_NEGATIVE:
+			            //No button clicked
+			            break;
+			        default: 
+			            return;	// Return true to consume the click event. In this case the
+						// onListItemClick listener is not called anymore.
+			        }
+			    }
+			};
+			
+		    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMain.this);
+			builder.setMessage(getString(R.string.msg1)).setPositiveButton(getString(R.string.yes), dialogClickListener)
+			    .setNegativeButton(getString(R.string.no), dialogClickListener).show();		//"Delete this reminder?"		
+				return true;
+				
 			}
 		});
+	   }
+	
+	
+	@Override
+	public void onResume(){			/// refresh information up on return to the activity
+		super.onResume();   
+		aPTDatabase.setTemporaryVariable("SelectedPersonName", ""); // Reset previously clicked PersonName of List View.
+		mAdapter = new DataAdapter(this.getBaseContext(),aPTDatabase.getPersonNameList()); // Load initial array by referring to database
+		setListAdapter(mAdapter);
+	
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		aPTDatabase.setTemporaryVariable("SelectedPersonName", mAdapter.getItem(position));
-
-		Intent ActivityTicketAdd = new Intent(getBaseContext(),ActivityTicketAdd.class);
-		startActivityForResult(ActivityTicketAdd,position);
+		Intent ActivityPersonAdd = new Intent(getBaseContext(),ActivityPersonAdd.class);
+		startActivityForResult(ActivityPersonAdd,position);
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		//Update changeData here
+		//Update changed Data event here up on the close of the add/edit screen // handled at onresume
+		//if (requestCode==endofdata){
+    		if (resultCode==RESULT_OK){
+    			Toast.makeText(this, data.getExtras().getString("person")+ "added", Toast.LENGTH_LONG).show();
+    			
+    		}
+    	
 	}
 
 	@Override
@@ -114,12 +152,10 @@ public class ActivityMain extends ListActivity {
 
 		private ArrayList<String> mOriginalValues; // Original Values
 		private ArrayList<String> mDisplayedValues;// Values to be displayed
-		LayoutInflater inflater;
-
-		public DataAdapter(Context context, ArrayList<String> stringNameList) {
-			this.mOriginalValues = stringNameList;
-			this.mDisplayedValues = stringNameList;
-			inflater = LayoutInflater.from(context);
+		public DataAdapter(Context context, ArrayList<String> arrayList) {
+			this.mOriginalValues = arrayList;
+			this.mDisplayedValues = arrayList;
+			LayoutInflater.from(context);
 		}
 
 		public Filter getFilter() {
@@ -153,7 +189,7 @@ public class ActivityMain extends ListActivity {
 						results.count = mOriginalValues.size();
 						results.values = mOriginalValues;
 					} else {
-						constraint = constraint.toString().toLowerCase();
+						constraint = constraint.toString().toLowerCase();		///check localization issue
 						for (int i = 0; i < mOriginalValues.size(); i++) {
 							String data = mOriginalValues.get(i);
 							if (data.toLowerCase().startsWith(constraint.toString())) {
@@ -165,10 +201,6 @@ public class ActivityMain extends ListActivity {
 						results.values = FilteredArrList;
 					}
 					return results;
-				}
-
-				public boolean onLoadClass(Class arg0) {
-					return false;
 				}
 			};
 			return filter;

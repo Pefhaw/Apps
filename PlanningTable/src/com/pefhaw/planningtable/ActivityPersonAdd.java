@@ -1,6 +1,7 @@
 package com.pefhaw.planningtable;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,16 @@ public class ActivityPersonAdd extends Activity {
 		
 		buttonSave.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				textViewMessages.setText(aPTDatabase.addPerson(editTextPersonName.getText().toString(), editTextPersonID.getText().toString(), editTextPhone.getText().toString(), editTextEmail.getText().toString(), editTextEmail.getText().toString()));
+				
+				Intent ReturnIntent = new Intent();
+				ReturnIntent.putExtra("name",aPTDatabase.addPerson(
+						editTextPersonName.getText().toString(), 
+						editTextPersonID.getText().toString(), // handle integer pass exception
+						editTextPhone.getText().toString(), 
+						editTextEmail.getText().toString(), 
+						editTextEmail.getText().toString()));				
+        		setResult(RESULT_OK,ReturnIntent);
+				finish();
 			}
 		});
 

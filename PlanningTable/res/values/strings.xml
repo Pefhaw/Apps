@@ -23,4 +23,12 @@
     <string name="buttonAddPerson">Add Person</string>
     <string name="AddPersonDataHere">Add Person data here !</string>
 
+    
+   	<string name="msg1">Delete this record?</string>
+  
+  	<string name="yes">Yes</string>
+  	<string name="no">No</string> 
+    
+    
+    
 </resources>
